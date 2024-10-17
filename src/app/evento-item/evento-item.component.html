@@ -1,0 +1,12 @@
+<img [src]="eve.image" class="card-img-top" alt="" [title]="eve.description" />
+<div class="card-body">
+    <h4 class="card-title">{{eve.title}}</h4>
+    <p class="card-text" [innerText]="eve.description">{{eve.description}}</p>
+    <div class="text-end">
+        <button class="btn btn-danger ml-3" (click)="deleteEvento()">Delete</button>
+    </div>
+</div>
+<div class="card-footer text-muted ">
+    {{eve.date | date:'dd/MM/y'}}
+    <span class="float-end">{{eve.price | currency:'EUR':'symbol'}}</span>
+</div>

@@ -16,46 +16,14 @@
     <div class="container">
         <div class="row" *ngIf="eventos && eventos.length > 0">
             <div class="col-md-6" *ngFor="let eve of eventos | eventoFilter:search">
-                <div class="card">
-                    <img [src]="eve.image" class="card-img-top" alt="" [title]="eve.description" />
-                    <div class="card-body">
-                        <h4 class="card-title">{{eve.title}}</h4>
-                        <p class="card-text" [innerText]="eve.description">{{eve.description}}</p>
-                    </div>
-                    <div class="card-footer text-muted">
-                        {{eve.date | date:'dd/MM/y'}}
-                        <span class="float-right">{{eve.price | currency:'EUR':'symbol'}}</span>
-                    </div>
-                </div>
+                <app-evento-item class="card" [eve]="eve" (delete)="deleteEvento(eve)">
+                </app-evento-item>
             </div>
         </div>
     </div>
 </div>
 
-<form class="mt-4 mb-4" (ngSubmit)="addEvento()">
-    <div class="form-group p-2">
-        <label for="name">Nombre</label>
-        <input type="text" class="form-control" name="title" [(ngModel)]="newEvento.title" placeholder="Enter name">
-    </div>
-    <div class="form-group p-2">
-        <label for="date">Fecha</label>
-        <input type="date" class="form-control" name="date" [(ngModel)]="newEvento.date">
-    </div>
-    <div class="form-group p-2">
-        <label for="description">Descripción</label>
-        <textarea class="form-control" name="description" rows="3" [(ngModel)]="newEvento.description" placeholder="Enter description"></textarea>
-    </div>
-    <div class="form-group p-2">
-        <label for="price">Precio</label>
-        <input type="number" class="form-control" name="price" min="0.00" max="10000.00" step="0.01" [(ngModel)]="newEvento.price"/>
-    </div>
-    <div class="form-group p-2">
-        <label for="image">Imagen</label>
-        <input type="file" class="form-control" name="image" #fileImage (change)="changeImage(fileImage)" [(ngModel)]="newEvento.image">
-    </div>
-    <img [src]="newEvento.image" alt="" class="img-thumbnail">
-    <button type="submit" class="btn btn-primary">Create</button>
-</form>
+<app-evento-add (addEvento)="addEvento($event)"></app-evento-add>
 
 
 <!--

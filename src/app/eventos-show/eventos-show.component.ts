@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Evento } from '../interfaces/evento';
+import { EventoService } from '../services/evento.service';
 
 @Component({
   selector: 'app-eventos-show',
@@ -10,6 +11,15 @@ export class EventosShowComponent {
   search = '';
   filterDate = '';
   filterPrice = '';
+  eventos:Evento[] = [];
+
+  constructor(private eventService:EventoService){
+    this.eventos = eventService.getEventos();
+  }
+
+  addEvento(evento: Evento){
+    this.eventos.push(evento);
+  }
 
   orderDate() {
     this.eventos = this.eventos.sort(
@@ -23,50 +33,9 @@ export class EventosShowComponent {
     );
   }
 
-  addEvento(){
-    this.eventos.push(this.newEvento)
-    this.newEvento = {
-      title: '',
-      image: '',
-      date: '',
-      description: '',
-      price: 0
-    }
+  deleteEvento(eve:Evento){
+    this.eventos.splice(this.eventos.indexOf(eve),1);
+    //Work on the filtered deletes
+    this.search = '';
   }
-
-  changeImage(fileInput: HTMLInputElement) {
-    if (!fileInput.files || fileInput.files.length === 0) {
-      return;
-    }
-    const reader: FileReader = new FileReader();
-    reader.readAsDataURL(fileInput.files[0]);
-    reader.addEventListener('loadend', (e) => {
-      this.newEvento.image = reader.result as string;
-    });
-  }
-
-  newEvento: Evento = {
-    title: '',
-    image: '',
-    date: '',
-    description: '',
-    price: 0,
-  };
-
-  eventos: Evento[] = [
-    {
-      title: 'Evento de prueba',
-      image: 'assets/evento1.jpg',
-      date: '2019-03-15',
-      description: 'Nos lo pasaremos genial',
-      price: 23.95,
-    },
-    {
-      title: 'Evento de prueba 2',
-      image: 'assets/evento2.jpg',
-      date: '2019-03-21',
-      description: 'Este es peor',
-      price: 15.5,
-    },
-  ];
 }
