@@ -17,10 +17,6 @@ export class EventosShowComponent {
     this.eventos = eventService.getEventos();
   }
 
-  addEvento(evento: Evento){
-    this.eventos.push(evento);
-  }
-
   orderDate() {
     this.eventos = this.eventos.sort(
       (a: Evento, b: Evento) => Date.parse(b.date) - Date.parse(a.date)
@@ -33,9 +29,11 @@ export class EventosShowComponent {
     );
   }
 
+  addEvento(evento: Evento){
+    this.eventos = this.eventService.addEvento(evento);
+  }
+
   deleteEvento(eve:Evento){
-    this.eventos.splice(this.eventos.indexOf(eve),1);
-    //Work on the filtered deletes
-    this.search = '';
+    this.eventos = this.eventService.deleteEvento(eve);
   }
 }

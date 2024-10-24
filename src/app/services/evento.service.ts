@@ -5,11 +5,12 @@ import { Evento } from '../interfaces/evento';
   providedIn: 'root'
 })
 export class EventoService {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() {}
 
-  getEventos(): Evento[] {
-    return [
+  eventos:Evento[] = [];
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor() {
+    this.eventos = [
       {
         title: 'Evento de prueba',
         image: 'assets/evento1.jpg',
@@ -25,5 +26,20 @@ export class EventoService {
         price: 15.5,
       }
     ];
+  }
+
+  getEventos(): Evento[] {
+    return this.eventos;
+  }
+
+  addEvento(evento: Evento): Evento[]{
+    this.eventos.push(evento);
+    return this.eventos;
+  }
+
+  deleteEvento(eve: Evento): Evento[]{
+    //this.eventos.splice(this.eventos.indexOf(eve),1);
+    this.eventos = this.eventos.filter(e => e.title != eve.title);
+    return this.eventos
   }
 }
